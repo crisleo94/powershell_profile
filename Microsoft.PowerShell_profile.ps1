@@ -34,7 +34,7 @@ function prompt {
   "> "
 }
 
-# git alias
+# GIT ALIASES
 function Get-Git { & git $args }
 New-Alias -Name g -Value Get-Git -Force -Option AllScope
 # git status alias
@@ -76,11 +76,25 @@ New-Alias -Name gcl -Value Get-GitClone -Force -Option AllScope
 # git stash
 function Get-GitStash { & git stash $args }
 New-Alias -Name gst -Value Get-GitStash -Force -Option AllScope
+
+#OTHER ALIASES
 # pipenv
 function Get-Pipenv { & pipenv $args }
 New-Alias -Name pv -Value Get-Pipenv -Force -Option AllScope
+# hardhat execute
+function Get-Hardhat { & npx hardhat $args }
+New-Alias -Name hh -Value Get-Hardhat -Force -Option AllScope
+# remove folder recursively
+function Get-RemoveRecursive { & Remove-Item -Recurse -Force $args }
+New-Alias -Name rmrf -Value Get-RemoveRecursive -Force -Option AllScope
+# create react parcel app
+function Get-CreateReactParcelApp { & npx create-react-parcel-app $args }
+New-Alias -Name crpa -Value Get-CreateReactParcelApp -Force -Option AllScope
+# create react app
+function Get-CreateReactApp { & npx create-react-app $args }
+New-Alias -Name cra -Value Get-CreateReactApp -Force -Option AllScope
 
 # custom env vars
 $proj = "C:\Users\crist\Projects"
 $learn = "C:\Users\crist\Learning"
-$test ="C:\Users\crist\Test"
+$test = "C:\Users\crist\Test"
