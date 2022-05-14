@@ -91,8 +91,25 @@ New-Alias -Name gcl -Value Get-GitClone -Force -Option AllScope
 # git stash
 function Get-GitStash { & git stash $args }
 New-Alias -Name gst -Value Get-GitStash -Force -Option AllScope
+
+#OTHER ALIASES
 # pipenv
 function Get-Pipenv { & pipenv $args }
 New-Alias -Name pv -Value Get-Pipenv -Force -Option AllScope
+# hardhat execute
+function Get-Hardhat { & npx hardhat $args }
+New-Alias -Name hh -Value Get-Hardhat -Force -Option AllScope
+# remove folder recursively
+function Get-RemoveRecursive { & Remove-Item -Recurse -Force $args }
+New-Alias -Name rmrf -Value Get-RemoveRecursive -Force -Option AllScope
+# create react parcel app
+function Get-CreateReactParcelApp { & npx create-react-parcel-app $args }
+New-Alias -Name crpa -Value Get-CreateReactParcelApp -Force -Option AllScope
+# create react app
+function Get-CreateReactApp { & npx create-react-app $args }
+New-Alias -Name cra -Value Get-CreateReactApp -Force -Option AllScope
+# open vscode with no videocard support
+function Get-CodeGUI { & code --disable-gpu --enable-use-zoom-for-dsf $args }
+New-Alias -Name ncd -Value Get-CodeGUI -Force -Option AllScope
 
 Invoke-Expression (&starship init powershell)
