@@ -1,38 +1,41 @@
-function prompt {
-  $p = Split-Path -leaf -path (Get-Location)
-  $user = $env:UserName
-  $host.UI.RawUI.WindowTitle = "@" + $user + "\" + $p + ">"
-  $host.UI.RawUI.ForegroundColor = "Blue"
+# OH MY POSH
+oh-my-posh init pwsh --config C:/Users/crist/themes/.bubblesextra.omp.json | Invoke-Expression
 
-  if (Test-Path .git) {
-    $p = Split-Path -leaf -path (Get-Location)
-    git branch | ForEach-Object {
-      if ($_ -match "^\*(.*)") {
-        $branch = $matches[1] + " ) "
-        Write-Host -NoNewLine $user -ForegroundColor Magenta
-        Write-Host -NoNewLine "@\"
-        Write-Host -NoNewLine $p -ForegroundColor Yellow
-        Write-Host -NoNewLine " (" -ForegroundColor DarkGreen
-        Write-Host -NoNewLine " branch:" -ForegroundColor DarkGreen
-        Write-Host -NoNewLine $branch -ForegroundColor DarkGreen
-      }
-    }
-  }
-  else {
-    Write-Host -NoNewLine $user -ForegroundColor Magenta
-    Write-Host -NoNewLine "@\"
-    Write-Host -NoNewLine $p -ForegroundColor Yellow
-    Write-Host -NoNewLine " " -ForegroundColor Black
-  }
-  if ($env:PIPENV_ACTIVE -eq 1) {
-    # @TODO: works only on Windows
-    $venv = (($env:VIRTUAL_ENV -split "\\")[-1] -split "-")[0] + ") "
-    Write-Host -NoNewLine "(" -ForegroundColor Cyan
-    Write-Host -NoNewLine "env:" -ForegroundColor Cyan
-    Write-Host -NoNewLine $venv -ForegroundColor Cyan
-  }
-  "> "
-}
+# function prompt {
+#   $p = Split-Path -leaf -path (Get-Location)
+#   $user = $env:UserName
+#   $host.UI.RawUI.WindowTitle = "@" + $user + "\" + $p + ">"
+#   $host.UI.RawUI.ForegroundColor = "Blue"
+
+#   if (Test-Path .git) {
+#     $p = Split-Path -leaf -path (Get-Location)
+#     git branch | ForEach-Object {
+#       if ($_ -match "^\*(.*)") {
+#         $branch = $matches[1] + " ) "
+#         Write-Host -NoNewLine $user -ForegroundColor Magenta
+#         Write-Host -NoNewLine "@\"
+#         Write-Host -NoNewLine $p -ForegroundColor Yellow
+#         Write-Host -NoNewLine " (" -ForegroundColor DarkGreen
+#         Write-Host -NoNewLine " branch:" -ForegroundColor DarkGreen
+#         Write-Host -NoNewLine $branch -ForegroundColor DarkGreen
+#       }
+#     }
+#   }
+#   else {
+#     Write-Host -NoNewLine $user -ForegroundColor Magenta
+#     Write-Host -NoNewLine "@\"
+#     Write-Host -NoNewLine $p -ForegroundColor Yellow
+#     Write-Host -NoNewLine " " -ForegroundColor Black
+#   }
+#   if ($env:PIPENV_ACTIVE -eq 1) {
+#     # @TODO: works only on Windows
+#     $venv = (($env:VIRTUAL_ENV -split "\\")[-1] -split "-")[0] + ") "
+#     Write-Host -NoNewLine "(" -ForegroundColor Cyan
+#     Write-Host -NoNewLine "env:" -ForegroundColor Cyan
+#     Write-Host -NoNewLine $venv -ForegroundColor Cyan
+#   }
+#   "> "
+# }
 
 # GIT ALIASES
 function Get-Git { & git $args }
@@ -96,8 +99,28 @@ New-Alias -Name cra -Value Get-CreateReactApp -Force -Option AllScope
 # open vscode with no videocard support
 function Get-CodeGUI { & code --disable-gpu --enable-use-zoom-for-dsf $args }
 New-Alias -Name ncd -Value Get-CodeGUI -Force -Option AllScope
+# flutter alias
+function Get-Flutter { & flutter $args }
+New-Alias -Name fl -Value Get-Flutter -Force -Option AllScope
+
+# python versions
+Set-Alias py36 "C:\Users\crist\AppData\Local\Programs\Python\Python36\python.exe"
+Set-Alias py37 "C:\Users\crist\AppData\Local\Programs\Python\Python37\python.exe"
+Set-Alias pycode "C:\Program Files\JetBrains\PyCharm Community Edition 2021.2.3\bin\pycharm64.exe"
 
 # custom env vars
 $proj = "C:\Users\crist\Projects"
 $learn = "C:\Users\crist\Learning"
 $test = "C:\Users\crist\Test"
+
+# For zoxide v0.8.0+
+Invoke-Expression (& {
+  $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
+  (zoxide init --hook $hook powershell | Out-String)
+})
+
+# For older versions of zoxide
+Invoke-Expression (& {
+  $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
+  (zoxide init --hook $hook powershell) -join "`n"
+})
