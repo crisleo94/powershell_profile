@@ -28,7 +28,6 @@ function prompt {
   }
   # checks if you're in a virtual python env and displays it
   if ($env:PIPENV_ACTIVE -eq 1) {
-    # @TODO: works only on Windows
     $venv = (($env:VIRTUAL_ENV -split "\\")[-1] -split "-")[0] + ") "
     Write-Host -NoNewLine "(" -ForegroundColor Cyan
     Write-Host -NoNewLine "env:" -ForegroundColor Cyan
@@ -111,5 +110,13 @@ New-Alias -Name cra -Value Get-CreateReactApp -Force -Option AllScope
 # open vscode with no videocard support
 function Get-CodeGUI { & code --disable-gpu --enable-use-zoom-for-dsf $args }
 New-Alias -Name ncd -Value Get-CodeGUI -Force -Option AllScope
+# flutter alias
+function Get-Flutter { & flutter $args }
+New-Alias -Name fl -Value Get-Flutter -Force -Option AllScope
+
+# python versions
+Set-Alias py36 "C:\Users\crist\AppData\Local\Programs\Python\Python36\python.exe"
+Set-Alias py37 "C:\Users\crist\AppData\Local\Programs\Python\Python37\python.exe"
+Set-Alias pycode "C:\Program Files\JetBrains\PyCharm Community Edition 2021.2.3\bin\pycharm64.exe"
 
 Invoke-Expression (&starship init powershell)
