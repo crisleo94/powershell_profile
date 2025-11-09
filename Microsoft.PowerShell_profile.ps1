@@ -1,4 +1,4 @@
-function prompt {
+﻿function prompt {
   # get only last folder location
   $p = Split-Path -leaf -path (Get-Location)
   $user = $env:UserName
@@ -34,6 +34,28 @@ function prompt {
     Write-Host -NoNewLine $venv -ForegroundColor Cyan
   }
   "> "
+}
+
+# Define la ruta de la carpeta de scripts
+# Usa $PSScriptRoot para hacer que la ruta sea relativa al perfil
+$ScriptFolder = Join-Path (Split-Path $PROFILE -Parent) "Scripts"
+
+# Asegúrate de que la carpeta existe
+if (Test-Path $ScriptFolder) {
+    
+    Write-Host "Cargando funciones de la carpeta: $ScriptFolder" -ForegroundColor DarkCyan
+
+    # Busca todos los archivos .ps1 dentro de la carpeta
+    Get-ChildItem -Path $ScriptFolder -Filter "*.ps1" | ForEach-Object {
+        
+        # El operador '.' (punto) importa las funciones al contexto actual (el perfil)
+        . $_.FullName 
+        
+        # Puedes añadir una línea para ver qué scripts se cargan si estás depurando:
+        # Write-Host "  > Cargado: $($_.Name)" -ForegroundColor Gray
+    }
+} else {
+    Write-Host "Advertencia: La carpeta de scripts '$ScriptFolder' no fue encontrada." -ForegroundColor Yellow
 }
 
 # python alias
