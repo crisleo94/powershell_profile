@@ -86,10 +86,10 @@ New-Alias -Name gad -Value Get-GitAdd -Force -Option AllScope
 function Get-GitTree { & git log --graph --oneline --decorate $args }
 New-Alias -Name gtr -Value Get-GitTree -Force -Option AllScope
 # git push alias
-function Get-GitPush { & git push origin $args }
+function Get-GitPush { & git push $args }
 New-Alias -Name gps -Value Get-GitPush -Force -Option AllScope
 # git pull alias
-function Get-GitPull { & git pull origin $args }
+function Get-GitPull { & git pull $args }
 New-Alias -Name gpl -Value Get-GitPull -Force -Option AllScope
 # git fetch alias
 function Get-GitFetch { & git fetch $args }
