@@ -114,9 +114,5 @@ New-Alias -Name ncd -Value Get-CodeGUI -Force -Option AllScope
 function Get-Flutter { & flutter $args }
 New-Alias -Name fl -Value Get-Flutter -Force -Option AllScope
 
-# python versions
-Set-Alias py36 "C:\Users\crist\AppData\Local\Programs\Python\Python36\python.exe"
-Set-Alias py37 "C:\Users\crist\AppData\Local\Programs\Python\Python37\python.exe"
-Set-Alias pycode "C:\Program Files\JetBrains\PyCharm Community Edition 2021.2.3\bin\pycharm64.exe"
 
 Invoke-Expression (&starship init powershell)
